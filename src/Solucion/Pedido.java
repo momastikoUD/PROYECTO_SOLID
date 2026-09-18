@@ -1,5 +1,6 @@
 package Solucion;
 // ==========================================================
+
 // Sistema de gestión de pedidos de un restaurante (versión SIN violaciones)
 // ==========================================================
 
@@ -20,20 +21,14 @@ public class Pedido {
 
     // REVISAR (1): calcula el total Y decide el descuento con un if/else
     // que crece cada vez que el restaurante inventa un tipo de cliente nuevo.
-    public double calcularTotal() {
+    public double calcularTotal(Cuenta jeroCuenta) {
         double subtotal = 0;
         for (double precio : precios) {
             subtotal += precio;
         }
 
-        if (tipoCliente.equals("REGULAR")) {
-            return subtotal;
-        } else if (tipoCliente.equals("VIP")) {
-            return subtotal * 0.9;
-        } else if (tipoCliente.equals("EMPLEADO")) {
-            return subtotal * 0.5;
-        }
-        return subtotal;
+        
+        return jeroCuenta.calcularTotal((double)subtotal);
     }
 
     public void setCliente(String cliente) {
@@ -43,29 +38,33 @@ public class Pedido {
     public void setTipoCliente(String tipoCliente) {
         this.tipoCliente = tipoCliente;
     }
-    public String getCliente(){
+
+    public String getCliente() {
         return this.cliente;
     }
-    public String getTipoCliente(){
+
+    public String getTipoCliente() {
         return this.tipoCliente;
     }
 }
 
- // REVISAR (2): SOLUCIONADO
+// REVISAR (2): SOLUCIONADO
 
-class PedidoRepositorio{
+class PedidoRepositorio {
     public void guardarEnBaseDeDatos(Pedido pedido) {
         System.out.println("Conectando a la BD...");
         System.out.println("INSERT INTO pedidos VALUES (...)");
     }
 }
+
 class ImpresionRecibos {
-    public void imprimirRecibo(Pedido pedido) {
+    public void imprimirRecibo(Pedido pedido, Cuenta cuenta) {
         ImpresoraTermica impresora = new ImpresoraTermica();
-        impresora.imprimir("Recibo de " + pedido.getCliente() + ": $" + pedido.calcularTotal());
+        impresora.imprimir("Recibo de " + pedido.getCliente() + ": $" + pedido.calcularTotal(cuenta));
     }
 }
-class EnviarCorreos{
+
+class EnviarCorreos {
     public void enviarCorreoConfirmacion(Pedido pedido) {
         System.out.println("Enviando correo de confirmación a " + pedido.getCliente() + "...");
     }
@@ -114,11 +113,13 @@ class PagoPuntosFidelidad extends MetodoPago {
         return true;
 
     }
-    /*     
-            Este metodo incumplia la regla LSP ya que la clase puntosFIdelidad incumplia lo que promete la super clase.
-            se modificó el método cobrar para que devuelva un booleano indicando si el cobro fue exitoso o no,
-            en lugar de lanzar una excepción.
-    */
+    /*
+     * Este metodo incumplia la regla LSP ya que la clase puntosFIdelidad incumplia
+     * lo que promete la super clase.
+     * se modificó el método cobrar para que devuelva un booleano indicando si el
+     * cobro fue exitoso o no,
+     * en lugar de lanzar una excepción.
+     */
 }
 
 // --- Personal del restaurante ---
