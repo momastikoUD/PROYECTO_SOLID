@@ -1,6 +1,6 @@
 package Solucion;
 // ==========================================================
-// Sistema de gestión de pedidos de un restaurante (versión CON violaciones)
+// Sistema de gestión de pedidos de un restaurante (versión SIN violaciones)
 // ==========================================================
 
 import java.util.ArrayList;
