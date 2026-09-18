@@ -81,34 +81,44 @@ class ImpresoraTermica {
 // --- Métodos de pago ---
 
 abstract class MetodoPago {
-    public abstract void cobrar(double monto);
+    public abstract boolean cobrar(double monto);
 }
 
 class PagoTarjeta extends MetodoPago {
     @Override
-    public void cobrar(double monto) {
+    public boolean cobrar(double monto) {
         System.out.println("Cobrando $" + monto + " con tarjeta.");
+        return true;
     }
 }
 
 class PagoEfectivo extends MetodoPago {
     @Override
-    public void cobrar(double monto) {
+    public boolean cobrar(double monto) {
         System.out.println("Cobrando $" + monto + " en efectivo.");
+        return true;
     }
 }
 
-// REVISAR (3): esta subclase no puede cumplir lo que promete la superclase.
+// REVISAR (3): Solucionado.
 class PagoPuntosFidelidad extends MetodoPago {
     private double puntosDisponibles = 20.0;
 
     @Override
-    public void cobrar(double monto) {
+    public boolean cobrar(double monto) {
         if (monto > puntosDisponibles) {
-            throw new IllegalStateException("No hay suficientes puntos para cobrar este monto.");
+            System.out.println("No hay suficientes puntos para cobrar este monto.");
+            return false;
         }
         System.out.println("Cobrando $" + monto + " con puntos de fidelidad.");
+        return true;
+
     }
+    /*     
+            Este metodo incumplia la regla LSP ya que la clase puntosFIdelidad incumplia lo que promete la super clase.
+            se modificó el método cobrar para que devuelva un booleano indicando si el cobro fue exitoso o no,
+            en lugar de lanzar una excepción.
+    */
 }
 
 // --- Personal del restaurante ---

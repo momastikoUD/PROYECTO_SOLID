@@ -1,0 +1,32 @@
+# Archivos de compilación Java
+bin/
+*.class
+
+# Archivos de build y dependencias
+build/
+out/
+target/
+.gradle/
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+*.classpath
+*.project
+.settings/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Archivos generados por Java
+*.jar
+*.war
+*.ear
